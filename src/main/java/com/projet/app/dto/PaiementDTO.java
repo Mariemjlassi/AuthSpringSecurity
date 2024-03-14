@@ -11,7 +11,7 @@ public class PaiementDTO {
     private Date dateExpiration;
     private int codeSecurite;
     private double montant;
-    private double prixPlat;
+    
 
 
 }

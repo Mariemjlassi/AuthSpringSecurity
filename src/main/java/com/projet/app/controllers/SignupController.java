@@ -40,7 +40,7 @@ public class SignupController {
     }
     
     @PostMapping("/chef")
-    
+    @Transactional
     public ResponseEntity<?> signupChef(@RequestBody ChefRegisterDto registerDto) {
         UserEntity createdUser = authService.createUser(registerDto);
         if (createdUser != null) {
@@ -51,7 +51,7 @@ public class SignupController {
     }
     
     @PostMapping("/admin")
-   
+    @Transactional
     public ResponseEntity<?> signupAdmin(@RequestBody AdminRegisterDto registerDto) {
         UserEntity createdUser = authService.createUser(registerDto);
         if (createdUser != null) {

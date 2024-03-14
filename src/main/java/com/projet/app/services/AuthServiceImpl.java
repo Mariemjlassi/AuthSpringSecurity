@@ -66,12 +66,12 @@ public class AuthServiceImpl implements AuthService {
         etudiant.setSoldeCarte(dto.getSoldeCarte());
         etudiant.setNumeroEtudiant(dto.getNumeroEtudiant());
         
-       
+        entityManager.persist(etudiant);
         entityManager.persist(etudiant);
 
         return etudiant;
     }
-    
+    @Transactional
     private UserEntity createUserFromChefDto(ChefRegisterDto registerDto) {
         
         Chef chef = new Chef();
@@ -80,9 +80,10 @@ public class AuthServiceImpl implements AuthService {
         chef.setRole(registerDto.getRole());
         chef.setNom(registerDto.getNom());
         chef.setPrenom(registerDto.getPrenom());
+        entityManager.persist(chef);
         return chef;
     }
-    
+    @Transactional
     private UserEntity createUserFromAdminDto(AdminRegisterDto registerDto) {
         
         Admin admin = new Admin();
@@ -91,6 +92,7 @@ public class AuthServiceImpl implements AuthService {
         admin.setRole(registerDto.getRole());
         admin.setNom(registerDto.getNom());
         admin.setPrenom(registerDto.getPrenom());
+        entityManager.persist(admin);
         return admin;
     }
 
