@@ -16,7 +16,7 @@ import lombok.Data;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class UserEntity {
 	 @Id
-	 @GeneratedValue(strategy = GenerationType.SEQUENCE)
+	 @GeneratedValue(strategy = GenerationType.TABLE)
 	    private Long id;
 	    private String nom;
 	    private String prenom;

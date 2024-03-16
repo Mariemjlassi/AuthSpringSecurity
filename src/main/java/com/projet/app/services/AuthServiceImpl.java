@@ -33,8 +33,8 @@ public class AuthServiceImpl implements AuthService {
     }
     
     @Override
+    @Transactional
     public UserEntity createUser(RegisterDto registerDto) {
-        
         if (userRepository.existsByEmail(registerDto.getEmail())) {
             return null;
         }
@@ -48,11 +48,10 @@ public class AuthServiceImpl implements AuthService {
         } else {
             throw new IllegalArgumentException("Invalid RegisterDto type");
         }
-        
-        userRepository.save(user);
-
+        userRepository.save(user); // Sauvegarde de l'entité parente
         return user;
     }
+
     
     @Transactional
     private UserEntity createUserFromEtudiantDto(EtudiantRegisterDto dto) {
@@ -65,11 +64,11 @@ public class AuthServiceImpl implements AuthService {
         etudiant.setPrenom(dto.getPrenom());
         etudiant.setSoldeCarte(dto.getSoldeCarte());
         etudiant.setNumeroEtudiant(dto.getNumeroEtudiant());
-        
-        entityManager.persist(etudiant);
-        entityManager.persist(etudiant);
-
-        return etudiant;
+        // Sauvegarde de l'entité parente d'abord
+        UserEntity savedUser = userRepository.save(etudiant);
+        // Utilisation de l'ID généré pour l'entité parente
+        etudiant.setId(savedUser.getId());
+        return entityManager.merge(etudiant); 
     }
     @Transactional
     private UserEntity createUserFromChefDto(ChefRegisterDto registerDto) {
@@ -80,8 +79,9 @@ public class AuthServiceImpl implements AuthService {
         chef.setRole(registerDto.getRole());
         chef.setNom(registerDto.getNom());
         chef.setPrenom(registerDto.getPrenom());
-        entityManager.persist(chef);
-        return chef;
+        UserEntity savedUser = userRepository.save(chef);
+        chef.setId(savedUser.getId());
+        return entityManager.merge(chef);
     }
     @Transactional
     private UserEntity createUserFromAdminDto(AdminRegisterDto registerDto) {
@@ -92,8 +92,9 @@ public class AuthServiceImpl implements AuthService {
         admin.setRole(registerDto.getRole());
         admin.setNom(registerDto.getNom());
         admin.setPrenom(registerDto.getPrenom());
-        entityManager.persist(admin);
-        return admin;
+        UserEntity savedUser = userRepository.save(admin);
+        admin.setId(savedUser.getId());
+        return entityManager.merge(admin);
     }
 
 
