@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +19,7 @@ import com.projet.app.services.EtudiantService;
 
 
 @RestController
-@RequestMapping("/api/etudiant")
+
 public class EtudiantController {
 	@Autowired
 	private EtudiantService es;
@@ -33,7 +33,7 @@ public class EtudiantController {
 	    es.rechargerCarte(request.getId(), request.getMontant());
 	}
 	
-	@GetMapping
+	@GetMapping("/api/etudiant")
 	public List<Etudiant> getAll(){
 		return es.getAllEtudiants();
 	}

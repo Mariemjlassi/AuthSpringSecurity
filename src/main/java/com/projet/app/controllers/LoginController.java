@@ -1,5 +1,7 @@
 package com.projet.app.controllers;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,8 +49,12 @@ public class LoginController {
         // Charger les informations de l'utilisateur
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getEmail());
 
-        // Générer le token JWT
-        String jwt = jwtUtil.generateToken(userDetails.getUsername());
+     // Récupérer les rôles de l'utilisateur
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+
+        // Générer le token JWT en incluant les rôles
+        String jwt = jwtUtil.generateToken(userDetails.getUsername(), authorities);
+        LoginResponse response = new LoginResponse(jwt);
 
         // Retourner la réponse avec le token JWT
         return ResponseEntity.ok(new LoginResponse(jwt));

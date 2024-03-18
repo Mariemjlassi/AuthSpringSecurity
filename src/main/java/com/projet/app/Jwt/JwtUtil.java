@@ -1,11 +1,14 @@
 package com.projet.app.Jwt;
 
 import java.security.Key;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -46,10 +49,12 @@ public class JwtUtil {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-    public String generateToken(String username) {
+    public String generateToken(String username, Collection<? extends GrantedAuthority> authorities) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", authorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()));
         return createToken(claims, username);
     }
+
 
     private String createToken(Map<String, Object> claims, String userName) {
         return Jwts
