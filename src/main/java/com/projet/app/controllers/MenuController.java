@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet.app.model.Menu;
@@ -22,42 +22,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping("/api/chef/menus")
+
 @CrossOrigin(origins = {"http://localhost:4200"})
 public class MenuController {
 	
 	@Autowired
 	private MenuService ms;
 	
-	@PostMapping
+	@PostMapping("/api/menus")
 	public Menu addmenu(@RequestBody Menu menu) {
 		return ms.addMenu(menu);
 			
 	}
 	
-	@GetMapping
+	@GetMapping("/api/menus")
 	public List<Menu> getMenu(){
 		return ms.getAll();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/api/menus/{id}")
 	public Menu getMenuById(@PathVariable ("id") Long id) {
 		return ms.getMenuById(id);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/api/menus/{id}")
 	public ResponseEntity<Menu> update(@PathVariable("id") Long id,@RequestBody Menu menu){
 		Menu m=ms.updateMenu(id, menu);
 		if(m == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		return ResponseEntity.ok(m);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/api/menus/{id}")
 	public void deleteMenu(@PathVariable ("id") Long id) {
 		this.ms.deleteMenu(id);
 	}
 	
-	@GetMapping("/menuj")
+	@GetMapping("/menuDujour")
 	public Menu menuDuJour() {
 		return ms.getMenuDuJourActuel();
 	}

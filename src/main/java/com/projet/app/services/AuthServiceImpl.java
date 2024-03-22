@@ -48,7 +48,7 @@ public class AuthServiceImpl implements AuthService {
         } else {
             throw new IllegalArgumentException("Invalid RegisterDto type");
         }
-        userRepository.save(user); // Sauvegarde de l'entité parente
+        userRepository.save(user); 
         return user;
     }
 

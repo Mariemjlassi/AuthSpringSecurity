@@ -46,17 +46,30 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not activated");
         }
 
-        // Charger les informations de l'utilisateur
+        
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getEmail());
 
-     // Récupérer les rôles de l'utilisateur
+     
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        String role = "ROLE_USER";
+        for (GrantedAuthority authority : authorities) {
+            if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                role = "ADMIN";
+                break;
+            } else if (authority.getAuthority().equals("ROLE_CHEF")) {
+                role = "CHEF";
+                break;
+            } else if (authority.getAuthority().equals("ROLE_ETUDIANT")) {
+                role = "ETUDIANT";
+                break;
+            }
+        }
 
-        // Générer le token JWT en incluant les rôles
+        
         String jwt = jwtUtil.generateToken(userDetails.getUsername(), authorities);
-        LoginResponse response = new LoginResponse(jwt);
+        LoginResponse response = new LoginResponse(jwt,role);
 
-        // Retourner la réponse avec le token JWT
-        return ResponseEntity.ok(new LoginResponse(jwt));
+        
+        return ResponseEntity.ok(response);
     }
 }
