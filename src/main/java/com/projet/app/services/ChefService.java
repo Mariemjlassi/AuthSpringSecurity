@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projet.app.model.Chef;
+import com.projet.app.model.Etudiant;
 import com.projet.app.repository.ChefRepository;
 
 @Service
@@ -25,6 +26,15 @@ public class ChefService {
 	
 	public void delete(long id) {
 		this.cr.deleteById(id);
+	}
+	
+	public Chef readById(Long id) {
+		Optional<Chef> chef = cr.findById(id);
+		if(chef.isPresent()) {
+			return chef.get();
+		}else {
+			return null;
+		}
 	}
 	
 	public Chef update(long id, Chef chef) {

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,8 @@ import com.projet.app.dto.RechargerCarteRequest;
 import com.projet.app.model.Etudiant;
 
 import com.projet.app.services.EtudiantService;
+
+
 
 
 
@@ -44,12 +47,21 @@ public class EtudiantController {
 	public Etudiant add(@RequestBody Etudiant etudiant) {
 		return es.addEtudiant(etudiant);
 	}
+	@GetMapping("/api/etudiant/{id}")
+	public Etudiant getPropById(@PathVariable ("id") Long id) {
+		return es.readById(id);
+	}
 	
 	@PutMapping("/api/etudiant/{id}")
 	public ResponseEntity<Etudiant> update(@PathVariable("id") Long id,@RequestBody Etudiant etudiant){
 		Etudiant etudiant2=es.updateEtudiant(id, etudiant);
 		if(etudiant2 == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		return ResponseEntity.ok(etudiant2);
+	}
+	
+	@DeleteMapping("/api/etudiant/{id}")
+	public void delete(@PathVariable("id") Long id) {
+		this.es.deleteEtudiant(id);
 	}
 	
 	

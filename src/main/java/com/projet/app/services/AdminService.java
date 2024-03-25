@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.projet.app.model.Admin;
-import com.projet.app.model.Chef;
+
 import com.projet.app.repository.AdminRepository;
 
 @Service
@@ -25,6 +25,14 @@ public class AdminService {
 	
 	public void delete(long id) {
 		this.ar.deleteById(id);
+	}
+	public Admin readById(Long id) {
+		Optional<Admin> ad = ar.findById(id);
+		if(ad.isPresent()) {
+			return ad.get();
+		}else {
+			return null;
+		}
 	}
 	
 	public Admin update(long id, Admin admin) {
