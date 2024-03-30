@@ -19,7 +19,7 @@ public class PaiementController {
 	
 	
 	@PostMapping
-	public ResponseEntity<String> effectuerPaiement(@RequestBody PaiementDTO pDTO) {
+    public ResponseEntity<String> effectuerPaiement(@RequestBody PaiementDTO pDTO) {
         try {
             ps.effectuerPaiement(pDTO.getEtudiantId(), 
                     pDTO.getNumeroCarte(),
@@ -27,8 +27,10 @@ public class PaiementController {
             return ResponseEntity.ok("Paiement effectué avec succès.");
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("vous avez deja effectuer un paiement aujourd'hui.");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue lors du paiement.");
         }
     }
 

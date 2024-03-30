@@ -43,6 +43,7 @@ public class PaiementService {
         		int nombrePlacesDisponibles = rs.getNombrePlacesDisponibles();
         		if (nombrePlacesDisponibles > 0) { 
                     if (etudiant.getSoldeCarte() >= m) {
+                    	if (etudiant.getCodeSecurite() == codeSecurite) {
                         double nouveauSolde = etudiant.getSoldeCarte() - m;
 
                         etudiant.setSoldeCarte(nouveauSolde);
@@ -58,11 +59,19 @@ public class PaiementService {
 
                         paiementRepository.save(paiement);
                         etudiantRepository.save(etudiant);
+                    	} else {
+                            throw new IllegalArgumentException("Code de sécurité incorrect.");
+                        }
+                    } else {
+                        throw new IllegalStateException("Solde insuffisant sur la carte de l'étudiant.");
                     }
-        		}
-        	}
+                } else {
+                    throw new IllegalStateException("Il n'y a pas de places disponibles dans le restaurant.");
+                }
+            } else {
+                throw new IllegalStateException("Il n'y a pas de menu disponible pour le jour actuel.");
+            }
         }
-    
     }
     
     private boolean aDejaPaiementPourAujourdhui(Etudiant etudiant) {

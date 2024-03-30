@@ -62,8 +62,9 @@ public class AuthServiceImpl implements AuthService {
         etudiant.setRole(dto.getRole());
         etudiant.setNom(dto.getNom());
         etudiant.setPrenom(dto.getPrenom());
+        etudiant.setCodeSecurite(dto.getCodeSecurite());
         etudiant.setSoldeCarte(dto.getSoldeCarte());
-        etudiant.setNumeroEtudiant(dto.getNumeroEtudiant());
+        
         // Sauvegarde de l'entité parente d'abord
         UserEntity savedUser = userRepository.save(etudiant);
         // Utilisation de l'ID généré pour l'entité parente

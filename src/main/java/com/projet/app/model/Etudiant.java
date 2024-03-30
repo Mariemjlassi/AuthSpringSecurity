@@ -14,9 +14,9 @@ import lombok.Data;
 
 public class Etudiant extends UserEntity{
 	
-    private String numeroEtudiant;
-    private double soldeCarte;
     
+    private double soldeCarte;
+    private int codeSecurite;
     @JsonIgnore
     @OneToMany(mappedBy = "etudiant")
     private List<Paiement> paiements = new ArrayList<>();

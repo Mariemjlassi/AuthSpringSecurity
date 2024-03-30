@@ -46,8 +46,8 @@ public class EtudiantService {
 			Etudiant etudiantExist = etud.get();
 			etudiantExist.setNom(etudiant.getNom());
 			etudiantExist.setPrenom(etudiant.getPrenom());
-			etudiantExist.setNumeroEtudiant(etudiant.getNumeroEtudiant());
 			etudiantExist.setSoldeCarte(etudiant.getSoldeCarte());
+			etudiantExist.setCodeSecurite(etudiant.getCodeSecurite());
 			etudiantExist.setEmail(etudiant.getEmail());
 			return etudiantRepository.save(etudiantExist);
 			
