@@ -12,7 +12,7 @@ public class ScheduledTasks {
     @Autowired
     private RestaurantService restaurantService;
 
-    @Scheduled(cron = "0 0 16 * * ?") // Exécution quotidienne à minuit
+    @Scheduled(cron = "0 0 16 * * ?") // Exécution quotidienne à 16:00
     public void reinitialiserNombrePlacesQuotidiennement() {
         restaurantService.reinitialiserNbrePlacesQuotidiennement();
     }
