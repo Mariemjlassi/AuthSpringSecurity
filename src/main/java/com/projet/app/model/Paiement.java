@@ -1,6 +1,10 @@
 package com.projet.app.model;
 
-import java.util.Date;
+
+
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -18,9 +22,10 @@ public class Paiement {
 	
 	private Long id;
 	private String numeroCarte;
-    private Date dateExpiration;
     private int codeSecurite;
     private double montant;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate datePaiement;
     
     @ManyToOne
     @JoinColumn(name = "etudiant_id")

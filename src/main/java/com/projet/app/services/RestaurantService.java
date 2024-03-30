@@ -44,5 +44,13 @@ public class RestaurantService {
             System.out.println("Restaurant non trouvé.");
         }
     }
+	
+	public void reinitialiserNbrePlacesQuotidiennement() {
+        // Réinitialise le nombre de places disponibles à 300
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(1L);
+        restaurant.setNombrePlacesDisponibles(300);
+        restaurantRepository.save(restaurant);
+    }
 
 }
