@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/signup/**", "/login").permitAll()
                 .requestMatchers("/api/etudiant/**").hasRole("ADMIN")
+                .requestMatchers("/{id}/monsolde").hasRole("ETUDIANT")
                 .requestMatchers("/api/menus/**").hasAnyRole("CHEF","ADMIN")
                 .requestMatchers("/menuDujour").authenticated()
                 .requestMatchers("/api/paiements").hasRole("ETUDIANT")

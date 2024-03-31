@@ -40,6 +40,16 @@ public class EtudiantService {
 		}
 	}
 	
+	public double consulterSolde(Long idEtudiant) {
+        Optional<Etudiant> etudiantOptional = etudiantRepository.findById(idEtudiant);
+        if (etudiantOptional.isPresent()) {
+            Etudiant etudiant = etudiantOptional.get();
+            return etudiant.getSoldeCarte();
+        } else {
+            throw new IllegalArgumentException("L'étudiant avec l'ID " + idEtudiant + " n'existe pas.");
+        }
+    }
+	
 	public Etudiant updateEtudiant(Long id, Etudiant etudiant) {
 		Optional<Etudiant> etud= etudiantRepository.findById(id);
 		if(etud.isPresent()) {

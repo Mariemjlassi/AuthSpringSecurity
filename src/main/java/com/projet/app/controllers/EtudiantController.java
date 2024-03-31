@@ -64,6 +64,12 @@ public class EtudiantController {
 		this.es.deleteEtudiant(id);
 	}
 	
+	@GetMapping("/{id}/monsolde")
+    public ResponseEntity<Double> consulterSolde(@PathVariable("id") Long idEtudiant) {
+        double solde = es.consulterSolde(idEtudiant);
+        return ResponseEntity.ok(solde);
+    }
+	
 	
 	
 
