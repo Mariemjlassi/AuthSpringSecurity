@@ -9,7 +9,7 @@ public class PaiementDTO {
 	private Long etudiantId;
     private String numeroCarte;
     private int codeSecurite;
-    private double montant;
+    
     
 
 

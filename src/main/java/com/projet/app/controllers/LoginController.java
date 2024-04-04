@@ -1,6 +1,12 @@
 package com.projet.app.controllers;
 
 import java.util.Collection;
+import com.projet.app.dto.LoginDto;
+import com.projet.app.dto.LoginResponse;
+import com.projet.app.services.CustomUserDetails;
+import com.projet.app.services.CustomUserDetailsService;
+import com.projet.app.Jwt.JwtUtil;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.projet.app.Jwt.JwtUtil;
-import com.projet.app.dto.LoginDto;
-import com.projet.app.dto.LoginResponse;
-import com.projet.app.services.CustomUserDetailsService;
 
 @RestController
 @RequestMapping("/login")
@@ -46,12 +47,16 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is not activated");
         }
 
-        
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(loginRequest.getEmail());
 
-     
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         String role = "ROLE_USER";
+        Long userId = null;
+
+        if (userDetails instanceof CustomUserDetails) {
+            userId = ((CustomUserDetails) userDetails).getId();
+        }
+
         for (GrantedAuthority authority : authorities) {
             if (authority.getAuthority().equals("ROLE_ADMIN")) {
                 role = "ADMIN";
@@ -65,11 +70,9 @@ public class LoginController {
             }
         }
 
-        
         String jwt = jwtUtil.generateToken(userDetails.getUsername(), authorities);
-        LoginResponse response = new LoginResponse(jwt,role);
+        LoginResponse response = new LoginResponse(jwt, role, userId);
 
-        
         return ResponseEntity.ok(response);
     }
 }

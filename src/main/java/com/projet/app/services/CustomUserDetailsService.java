@@ -44,7 +44,6 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new IllegalArgumentException("type d'utilisateur inconnu");
         }
 
-        return new User(user.getEmail(), user.getPassword(), authorities);
-   
+        return (UserDetails) new CustomUserDetails(user, authorities);
     }
 }
