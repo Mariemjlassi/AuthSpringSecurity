@@ -14,7 +14,7 @@ import lombok.Data;
 
 public class Etudiant extends UserEntity{
 	
-    
+	private String numeroCarte;
     private double soldeCarte;
     private int codeSecurite;
     @JsonIgnore
