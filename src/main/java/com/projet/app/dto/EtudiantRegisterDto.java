@@ -5,6 +5,8 @@ import lombok.Data;
 @Data
 public class EtudiantRegisterDto extends RegisterDto{
 	private String numeroEtudiant;
+	private String numeroCarte;
     private double soldeCarte;
     private int codeSecurite;
+    
 }
