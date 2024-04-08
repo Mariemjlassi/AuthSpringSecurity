@@ -61,7 +61,7 @@ public class PaiementService {
                         paiementRepository.save(paiement);
                         etudiantRepository.save(etudiant);
                     	} else {
-                            throw new IllegalArgumentException("Code de sécurité incorrect.");
+                            throw new IllegalArgumentException("Code de sécurité incorrect ou numero de carte.");
                         }
                     } else {
                         throw new IllegalStateException("Solde insuffisant sur la carte de l'étudiant.");
@@ -83,6 +83,7 @@ public class PaiementService {
     public List<Paiement> getAllPaiements(){
     	return paiementRepository.findAll();
     }
+    
     
 
 }

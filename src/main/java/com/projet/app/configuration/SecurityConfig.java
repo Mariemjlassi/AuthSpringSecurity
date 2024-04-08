@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/admin/**").hasRole("ADMIN")
                 .requestMatchers("/api/restaurant").authenticated()
                 .requestMatchers("/rechargerCarte").hasRole("ETUDIANT")
+                .requestMatchers("/transferersolde").permitAll()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

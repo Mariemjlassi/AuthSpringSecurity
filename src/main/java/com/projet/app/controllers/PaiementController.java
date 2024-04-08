@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet.app.dto.PaiementDTO;
+import com.projet.app.dto.TransfererRequest;
 import com.projet.app.services.PaiementService;
 
 @RestController
@@ -33,5 +34,7 @@ public class PaiementController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue lors du paiement.");
         }
     }
+	
+	
 
 }

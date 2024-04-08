@@ -62,11 +62,7 @@ public class AuthServiceImpl implements AuthService {
         etudiant.setRole(dto.getRole());
         etudiant.setNom(dto.getNom());
         etudiant.setPrenom(dto.getPrenom());
-        if (dto.getNumeroCarte() == null) {
-            etudiant.setNumeroCarte(dto.getNumeroEtudiant());
-        } else {
-            etudiant.setNumeroCarte(dto.getNumeroCarte());
-        }
+        etudiant.setNumeroCarte(dto.getNumeroCarte());
         etudiant.setCodeSecurite(dto.getCodeSecurite());
         etudiant.setSoldeCarte(dto.getSoldeCarte());
         

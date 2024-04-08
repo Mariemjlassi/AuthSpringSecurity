@@ -11,6 +11,8 @@ import com.projet.app.model.Etudiant;
 
 import com.projet.app.repository.EtudiantRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class EtudiantService {
 	
@@ -75,6 +77,36 @@ public class EtudiantService {
 			etudiantRepository.save(etudiant);
 		}
 	}
+	
+	@Transactional
+    public void transfererSolde(int codeSecuriteSource, String numeroCarteDestination, double montant) {
+        Optional<Etudiant> etudiantSourceOptional = etudiantRepository.findByCodeSecurite(codeSecuriteSource);
+        Optional<Etudiant> etudiantDestinationOptional = etudiantRepository.findByNumeroCarte(numeroCarteDestination);
+        
+        if (etudiantSourceOptional.isPresent() && etudiantDestinationOptional.isPresent()) {
+            Etudiant etudiantSource = etudiantSourceOptional.get();
+            Etudiant etudiantDestination = etudiantDestinationOptional.get();
+            
+            
+            if (etudiantSource.getSoldeCarte() >= montant) {
+                
+                double nouveauSoldeSource = etudiantSource.getSoldeCarte() - montant;
+                double nouveauSoldeDestination = etudiantDestination.getSoldeCarte() + montant;
+                
+                etudiantSource.setSoldeCarte(nouveauSoldeSource);
+                etudiantDestination.setSoldeCarte(nouveauSoldeDestination);
+                
+                
+                etudiantRepository.save(etudiantSource);
+                etudiantRepository.save(etudiantDestination);
+            } else {
+            throw new IllegalStateException("Solde insuffisant pour effectuer le transfert.");
+        }
+    } else {
+        throw new IllegalArgumentException("Étudiant source ou destination introuvable.");
+    }
+}
+
 	
 	
 	

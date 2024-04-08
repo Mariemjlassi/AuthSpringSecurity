@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet.app.dto.RechargerCarteRequest;
+import com.projet.app.dto.TransfererRequest;
 import com.projet.app.model.Etudiant;
 
 import com.projet.app.services.EtudiantService;
@@ -68,6 +69,20 @@ public class EtudiantController {
     public ResponseEntity<Double> consulterSolde(@PathVariable("id") Long idEtudiant) {
         double solde = es.consulterSolde(idEtudiant);
         return ResponseEntity.ok(solde);
+    }
+	
+	@PostMapping("/transferersolde")
+    public ResponseEntity<String> transfererSolde(@RequestBody TransfererRequest request) {
+        try {
+            es.transfererSolde(request.getCodeSecuriteSource(), request.getNumeroCarteDestination(), request.getMontant());
+            return ResponseEntity.ok("Transfert de solde effectué avec succès.");
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur est survenue lors du transfert de solde.");
+        }
     }
 	
 	

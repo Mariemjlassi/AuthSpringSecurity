@@ -52,9 +52,11 @@ public class LoginController {
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         String role = "ROLE_USER";
         Long userId = null;
+        String numeroCarte=null;
 
         if (userDetails instanceof CustomUserDetails) {
             userId = ((CustomUserDetails) userDetails).getId();
+            numeroCarte=((CustomUserDetails)userDetails).getNumeroCarte();
         }
 
         for (GrantedAuthority authority : authorities) {
@@ -71,7 +73,7 @@ public class LoginController {
         }
 
         String jwt = jwtUtil.generateToken(userDetails.getUsername(), authorities);
-        LoginResponse response = new LoginResponse(jwt, role, userId);
+        LoginResponse response = new LoginResponse(jwt, role, userId,numeroCarte);
 
         return ResponseEntity.ok(response);
     }
