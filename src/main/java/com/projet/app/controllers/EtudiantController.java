@@ -74,7 +74,7 @@ public class EtudiantController {
 	@PostMapping("/transferersolde")
     public ResponseEntity<String> transfererSolde(@RequestBody TransfererRequest request) {
         try {
-            es.transfererSolde(request.getCodeSecuriteSource(), request.getNumeroCarteDestination(), request.getMontant());
+            es.transfererSolde(request.getCodeSecuriteSource(), request.getNumeroCarteDestination(), request.getMontant(), request.getId());
             return ResponseEntity.ok("Transfert de solde effectué avec succès.");
         } catch (IllegalStateException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

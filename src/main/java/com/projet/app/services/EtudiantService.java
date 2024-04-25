@@ -77,15 +77,21 @@ public class EtudiantService {
 			etudiantRepository.save(etudiant);
 		}
 	}
-	
-	@Transactional
-    public void transfererSolde(int codeSecuriteSource, String numeroCarteDestination, double montant) {
-        Optional<Etudiant> etudiantSourceOptional = etudiantRepository.findByCodeSecurite(codeSecuriteSource);
+
+    @Transactional
+	public void transfererSolde(int codeSecuriteSource, String numeroCarteDestination, double montant,Long id) {
+        Optional<Etudiant> etudiantSourceOptional = etudiantRepository.findById(id);
         Optional<Etudiant> etudiantDestinationOptional = etudiantRepository.findByNumeroCarte(numeroCarteDestination);
         
+        
         if (etudiantSourceOptional.isPresent() && etudiantDestinationOptional.isPresent()) {
-            Etudiant etudiantSource = etudiantSourceOptional.get();
+        	
+        	Etudiant etudiantSource = etudiantSourceOptional.get();
             Etudiant etudiantDestination = etudiantDestinationOptional.get();
+        	
+        	
+        	if(etudiantSource.getCodeSecurite()==(codeSecuriteSource) ){
+            
             
             
             if (etudiantSource.getSoldeCarte() >= montant) {
@@ -103,11 +109,13 @@ public class EtudiantService {
             throw new IllegalStateException("Solde insuffisant pour effectuer le transfert.");
         }
     } else {
+        throw new IllegalArgumentException("Code Securite erroné.");
+    }
+        	}else {
         throw new IllegalArgumentException("Étudiant source ou destination introuvable.");
     }
 }
 
-	
 	
 	
 	

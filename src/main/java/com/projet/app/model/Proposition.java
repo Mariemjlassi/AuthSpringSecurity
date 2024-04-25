@@ -1,9 +1,5 @@
 package com.projet.app.model;
 
-import java.time.LocalDate;
-
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 import jakarta.persistence.Entity;
@@ -15,19 +11,16 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="Menu")
-public class Menu {
+@Table(name="proposition")
+public class Proposition {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	private Long id;
-	@JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate date;
-	private String descriptionPlat;
+	private String plat;
 	private String supplement;
 	private String dessert;
 	private Long vote;
-	private Long qteDisponible;
 	
 
 }
