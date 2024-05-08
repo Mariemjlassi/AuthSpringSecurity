@@ -23,7 +23,15 @@ public class MenuService {
 	
 	
 	public Menu addMenu(Menu menu) {
-		return mr.save(menu);
+		LocalDate currentDate = LocalDate.now();
+	    Menu existingMenu = mr.findByDate(currentDate);
+	    if (existingMenu != null) {
+	        
+	        logger.error("Un menu a déjà été ajouté pour la date du jour : {}", currentDate);
+	        return null;
+	    }
+	    menu.setDate(currentDate); // Set the date to the current date
+	    return mr.save(menu);
 	}
 	
 	public List<Menu> getAll(){

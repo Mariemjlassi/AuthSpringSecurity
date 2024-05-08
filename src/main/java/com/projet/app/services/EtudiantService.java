@@ -89,8 +89,11 @@ public class EtudiantService {
         	Etudiant etudiantSource = etudiantSourceOptional.get();
             Etudiant etudiantDestination = etudiantDestinationOptional.get();
         	
+            if (etudiantSource.getId()==etudiantDestination.getId()) {
+                throw new IllegalArgumentException("Un étudiant ne peut pas transférer de l'argent à lui-même.");
+            }
         	
-        	if(etudiantSource.getCodeSecurite()==(codeSecuriteSource) ){
+        	if(etudiantSource.getCodeSecurite()==(codeSecuriteSource)){
             
             
             
